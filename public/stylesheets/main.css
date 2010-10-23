@@ -263,6 +263,8 @@
 	font-size: 11pt;
 }
 
+
+
 .search_results .code {
 	font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 	background-color: #eeeeff;
@@ -341,6 +343,7 @@ h1 {
 .doc .content {
 	
 }
+
 
 span.added {
 }
@@ -1116,4 +1119,11 @@ span.version {
 	color: white;
 }
 
+.docstring_comments a {
+	color: #777;
+	margin-top: 10px;
+	display: block;
+	text-align: right;
+	font-size: 8pt;
+}
 

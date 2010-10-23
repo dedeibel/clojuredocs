@@ -107,12 +107,24 @@ $(document).ready(function() {
 	<% if @function.doc %>
 	<div class="doc">
 		<a class="internal_nav scroll" href="#doc" name="doc"></a>
-		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' } if @function.doc %></div>
+		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' } if @function.doc %><br />
+		  <div class="docstring_comments">
+		    <%= link_to 'Confusing? Wrong? Help improve this docstring.', :controller => 'docstring_comments', :id => @function.id %>
+		  </div>
+		</div>
 		<div class="copyright_license">
 			<%= @library.copyright %>
-			
 			<%= (@library.license || "See <a href='#{@library.site_url}'>#{@library.site_url}</a> for copyright and license details.")%>
 		</div>
+	</div>
+	<% else %>
+	<div class="doc">
+	  <div class="content empty_docstring">
+	  No docstring for <%= @function.namespace.name %>/<%= @function.name %>.
+	  <div class="docstring_comments">
+	<%= link_to 'Think this var needs a docstring? Discuss it here.', :controller => 'docstring_comments', :id => @function.id %>
+	  </div>
+	  </div>
 	</div>
 	<% end %>
 	
