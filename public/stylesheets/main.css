@@ -340,11 +340,6 @@ h1 {
 	font-size: 10pt;
 }
 
-.doc .content {
-	
-}
-
-
 span.added {
 }
 
@@ -1119,7 +1114,7 @@ span.version {
 	color: white;
 }
 
-.docstring_comments a {
+.docstring_comments_link_wrapper a {
 	color: #777;
 	margin-top: 10px;
 	display: block;
@@ -1127,3 +1122,42 @@ span.version {
 	font-size: 8pt;
 }
 
+.docstring_comments h3 {
+	font-size: 23px;
+	margin-bottom: 10px;
+}
+
+.docstring_comments p {
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+.docstring_comments_list {
+	margin-bottom: 50px;
+}
+
+.docstring_comment {
+	border: solid #ccc 1px;
+	margin-bottom: 15px;
+}
+
+.docstring_comment_header {
+	border-bottom: solid #ccc 1px;
+	background-color: #eee;
+	padding: 5px;
+}
+
+.docstring_comment_body {
+	padding: 10px;
+}
+
+.docstring_comment_footer {
+	border-top: solid #ccc 1px;
+	padding: 5px;
+	background-color: #eee;
+}
+
+.docstring_comment_body li {
+	list-style-type: disc;
+	margin-left: 20px;
+}

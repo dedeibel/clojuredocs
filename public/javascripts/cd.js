@@ -508,9 +508,7 @@ CD.VarPage = function() {
 		})
 
 		updatePreview()
-
 	}
-	
 	
 	return {
 		init: function(args) {

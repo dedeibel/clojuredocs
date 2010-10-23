@@ -16,6 +16,7 @@ class Function < ActiveRecord::Base
     :association_foreign_key => "from_function_id"
     
   has_many :see_alsos, :foreign_key => "from_id"
+  has_many :docstring_comments
   
   acts_as_commentable
   

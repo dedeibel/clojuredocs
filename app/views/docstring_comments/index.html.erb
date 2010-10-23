@@ -1,25 +1,94 @@
 <% content_for :title, " - Docstring Discussion - #{@function.namespace.name}/#{@function.name}" %>
-<div class="container_16">
-  <div class="grid_12 prefix_2 suffix_2">
-    <%= link_to "<< back to #{@function.namespace.name}/#{@function.name}", @function.link_opts %>
-    <% if @function.doc %>
-  	<div class="doc">
-  		<a class="internal_nav scroll" href="#doc" name="doc"></a>
-  		<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' } if @function.doc %><br />
-  		</div>
-  		<div class="copyright_license">
-  			<%= @function.library.copyright %>
+<script type"text/javascript">
+$(document).ready(function() {
+	function previewify(el) {
+		var preview = el.find(".preview")
+		var textarea = el.find("textarea")
 
-  			<%= (@function.library.license || "See <a href='#{@function.library.site_url}'>#{@function.library.site_url}</a> for copyright and license details.")%>
-  		</div>
-  	</div>
-  	<% else %>
-  	<div class="doc">
-  	  <div class="content empty_docstring">
-  	  No docstring for <%= @function.namespace.name %>/<%= @function.name %>.
-  	  </div>
-  	</div>
-  	<% end %>
-  	
-  </div>
-</div>
+		function updatePreview() {
+			preview.html(CD.toCDMarkdown(textarea.val()))
+			SyntaxHighlighter.highlight(preview)
+		}
+
+		textarea.keyup(function() {
+			updatePreview()
+		})
+
+		updatePreview()
+	}
+
+	previewify($(".docstring_comments"))
+})
+</script>
+<div class="container_16">
+	<div class="grid_12 prefix_2 suffix_2">
+		<%= link_to "<< back to #{@function.namespace.name}/#{@function.name}", @function.link_opts %>
+		<h2>Docstring Discussion for <%= @function.namespace.name %>/<%= @function.name %>.</h2>
+		<% if @function.doc %>
+		<div class="doc">
+			<a class="internal_nav scroll" href="#doc" name="doc"></a>
+			<div class="content"><%= @function.doc.gsub("\n", "<br />").gsub(/http:\/\/[a-zA-Z0-9-.\/?%&=:@;_#]*/){|s| '<a href="' + s + '">' + s + '</a>' } if @function.doc %><br />
+			</div>
+			<div class="copyright_license">
+				<%= @function.library.copyright %>
+
+				<%= (@function.library.license || "See <a href='#{@function.library.site_url}'>#{@function.library.site_url}</a> for copyright and license details.")%>
+			</div>
+		</div>
+		<% else %>
+		<div class="doc">
+			<div class="content empty_docstring">
+				No docstring for <%= @function.namespace.name %>/<%= @function.name %>.
+			</div>
+		</div>
+		<% end %>
+		<div class="docstring_comments">
+			<ul class="docstring_comments_list">
+				<% @function.docstring_comments.each do |dc| %>
+					<li class="docstring_comment">
+						<div class="docstring_comment_header">
+							<div class="author">
+								<img src="<%= grav_url_for(current_user.email, 25) %>" />
+								<span class="author_nickname">
+									<%= link_to current_user.login, :controller => 'user', :action => 'profile', :login => current_user.login %>
+								</span>
+							</div>
+							<div class="clear"></div>
+						</div>
+
+						<div class="docstring_comment_body">
+							<%= RDiscount.new(dc.body).to_html %>
+						</div>
+						
+						<div class="docstring_comment_footer">
+							Posted <%= time_ago_or_time_stamp(dc.created_at)%>.
+							<% if dc.created_at != dc.updated_at %>
+								Last edited <%= dc.updated_at %>
+							<% end%>
+						</div>
+					</li>
+				<% end %>
+			</ul>
+			<div class="edit_comment">
+				<h3>What&apos;s your suggestion?</h3>
+				<p>This is a place to discuss the docstring in question.  Is it confusing? Is it wrong? Explain below.</p>
+				<p>Don&apos;t write replacement docstrings below, just suggestions / comments. If you&apos;d like to write docstring copy, you&apos;ll need to have signed a Contributor&apos;s agreement (<a href="http://clojure.org/contributing">process outlined here</a>).
+					<% form_for :docstring_comment, @docstring_comment do |f| %>
+					Comment <span class="instructions">(markdown allowed, code in &lt;pre /&gt;)</span><br />
+					<%= f.text_area :body, :class=> 'textarea' %>
+					<div style="text-align: right">
+						<a class="cancel" href="" style="float: left">Cancel</a>
+						<!-- <input class="preview_comment" type="button" value="Preview" /> -->
+						<%= f.submit 'Update Comment'%>
+						<div class="clear"></div>
+					</div>
+					<input type="hidden" name="update_comment" value="true" />
+					<input type="hidden" name="comment_id" value="-1" />
+					<fieldset class="live_preview">
+						<legend>Live Preview</legend>
+						<div class="preview"></div>
+					</fieldset>
+					<% end %>
+				</div>
+			</div>
+		</div>
