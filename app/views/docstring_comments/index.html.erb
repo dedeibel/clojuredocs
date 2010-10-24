@@ -23,7 +23,7 @@ $(document).ready(function() {
 <div class="container_16">
 	<div class="grid_12 prefix_2 suffix_2">
 		<%= link_to "<< back to #{@function.namespace.name}/#{@function.name}", @function.link_opts %>
-		<h2>Docstring Discussion for <%= @function.namespace.name %>/<%= @function.name %>.</h2>
+		<h2>Docstring discussion for version <span class="highlight"><%= @function.library.version %></span> of <%= @function.namespace.name %>/<%= @function.name %>.</h2>
 		<% if @function.doc %>
 		<div class="doc">
 			<a class="internal_nav scroll" href="#doc" name="doc"></a>
@@ -71,8 +71,11 @@ $(document).ready(function() {
 			</ul>
 			<div class="edit_comment">
 				<h3>What&apos;s your suggestion?</h3>
-				<p>This is a place to discuss the docstring in question.  Is it confusing? Is it wrong? Explain below.</p>
-				<p>Don&apos;t write replacement docstrings below, just suggestions / comments. If you&apos;d like to write docstring copy, you&apos;ll need to have signed a Contributor&apos;s agreement (<a href="http://clojure.org/contributing">process outlined here</a>).
+				<ul>
+					<li>Try to be as specific as possible about <em>why</em> you feel the docstring for this var needs work. Is it confusing? Is it wrong? Explain below.</li>
+					<li>Suggestions and comments only, please. Take a look at the <a href="http://clojure.org/contributing">contributing overview</a> if you'd like to submit updated copy.</li>
+				</ul>
+				
 					<% form_for :docstring_comment, @docstring_comment do |f| %>
 					Comment <span class="instructions">(markdown allowed, code in &lt;pre /&gt;)</span><br />
 					<%= f.text_area :body, :class=> 'textarea' %>
