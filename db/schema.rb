@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101023171010) do
+ActiveRecord::Schema.define(:version => 20101023173335) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",                 :default => 0
@@ -227,23 +227,6 @@ ActiveRecord::Schema.define(:version => 20101023171010) do
 
   add_index "see_alsos", ["from_id"], :name => "from_id_idx"
   add_index "see_alsos", ["to_id"], :name => "to_id_idx"
-
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "taggable_type"
-    t.string   "context"
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
-  create_table "tags", :force => true do |t|
-    t.string "name"
-  end
 
   create_table "users", :force => true do |t|
     t.string   "login"

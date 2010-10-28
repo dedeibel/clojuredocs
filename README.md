@@ -19,7 +19,7 @@ ClojureDocs consists of three main projects: this website, the [library importer
 * Clone the repo: `git clone https://github.com/zkim/clojuredocs.git`
 * `cd clojuredocs`
 * Copy the database template: `cp ./config/database.example.yml ./config/database.yml` 
-* Install required gems: `bundle install`
+* Install required gems: `bundle install` - See [http://www.napcsweb.com/blog/2007/06/01/mysql-gem-on-osx/](http://www.napcsweb.com/blog/2007/06/01/mysql-gem-on-osx/) if you have problems iwth the mysql gem.
 * Create the required databases: `echo 'create database clojuredocs_development; create database clojuredocs_test' | mysql -uroot`
 * Run database migrations: `rake db:migrate`
 * Start the dev server: `script/server`
