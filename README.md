@@ -15,6 +15,7 @@ ClojureDocs consists of three main projects: this website, the [library importer
 
 ## Getting Started
 * Open up a terminal.
+* Install bundler: `sudo gem install bundler`
 * Clone the repo: `git clone https://github.com/zkim/clojuredocs.git`
 * `cd clojuredocs`
 * Copy the database template: `cp ./config/database.example.yml ./config/database.yml` 
