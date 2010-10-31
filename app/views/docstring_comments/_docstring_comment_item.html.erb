@@ -1,0 +1,31 @@
+<li class="docstring_comment" id="docstring_comment_<%= dc.id %>">
+  <div class="docstring_comment_header">
+    <div class="author">
+      <img src="<%= grav_url_for(dc.user.email, 25) %>" />
+      <span class="author_nickname">
+        <%= link_to dc.user.login, :controller => 'user', :action => 'profile', :login => dc.user.login %>
+      </span>
+    </div>
+    <div class="controls">
+      <a class="anchor" href="#docstring_comment_<%= dc.id %>" name="docstring_comment_<%= dc.id %>">link</a>
+      <% if dc.user == current_user %>
+        |
+        <a href="#" class="edit">edit</a>
+        |
+        <a href="#" class="delete">delete</a>
+      <% end %>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <div class="docstring_comment_body">
+    <%= RDiscount.new(dc.body).to_html %>
+  </div>
+  
+  <div class="docstring_comment_footer">
+    Posted <%= time_ago_or_time_stamp(dc.created_at)%>.
+    <% if dc.created_at != dc.updated_at %>
+      Last edited <%= dc.updated_at %>
+      <% end%>
+  </div>
+</li>
