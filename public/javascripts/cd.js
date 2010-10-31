@@ -630,6 +630,9 @@ CD.DocstringDiscussion = function() {
         
         var del = root.find('.delete')
         var delClick = function() {
+
+            if(!confirm("You're about to delete your comment. There's no undo. Are you sure?")) return false
+            
             $.ajax({
                 url: '/docstring_comments/delete',
                 data: {
