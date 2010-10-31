@@ -19,4 +19,5 @@ group :test do
   gem 'ZenTest', '4.4.0'
   gem 'rcov', '0.9.9', :require => nil
   gem 'ruby-prof', '0.9.2'
+  gem 'factory_girl', '1.3.2'
 end
