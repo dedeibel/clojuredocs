@@ -620,41 +620,38 @@ CD.DocstringDiscussion = function() {
         updatePreview()
     }
 
-    function initControls(commentItems) {
+    function initControls(commentItem) {
+        
+        var root = $(commentItem)
+        var dsId = root.attr('id').split("_")[2]
+        var spinner = $('<img src="/images/ajax-loader.gif" />')
 
-        $.each(commentItems, function(i, o) {
-            var root = $(o)
-            var dsId = root.attr('id').split("_")[2]
-            var spinner = $('<img src="/images/ajax-loader.gif" />')
-
-            if(!dsId) return
-            
-            var del = root.find('.delete')
-            var delClick = function() {
-                $.ajax({
-                    url: '/docstring_comments/delete',
-                    data: {
-                        id: dsId
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        if(data.success) {
-                            root.slideUp(500)
-                        } else {
-                            CD.showMessage(data.message)
-                            spinner.replaceWith(del)
-                        }
+        if(!dsId) return
+        
+        var del = root.find('.delete')
+        var delClick = function() {
+            $.ajax({
+                url: '/docstring_comments/delete',
+                data: {
+                    id: dsId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success) {
+                        root.slideUp(500)
+                    } else {
+                        CD.showMessage(data.message)
+                        spinner.replaceWith(del)
                     }
-                })
+                }
+            })
 
-                del.replaceWith(spinner)
+            del.replaceWith(spinner)
 
-                return false
-            }
-       
-            
-            del.click(delClick)
-        })
+            return false
+        }
+        
+        del.click(delClick)
     }
 
     function initNewComment(userId, functionId, root) {
@@ -664,34 +661,38 @@ CD.DocstringDiscussion = function() {
 
         submit.click(function() {
                          $.ajax({
-                                    url: "/docstring_comments/new",
-                                    data: {
-                                        user_id: userId,
-                                        function_id: functionId,
-                                        body: root.find(".textarea").val()
-                                    },
-                                    dataType: 'json',
-                                    success: function(data) {
-                                        if(data.success) {
-                                            var content = $(data.content)
-                                            content.css('display', 'none')
-                                            $('.docstring_comments_list').append(content)
-                                            content.slideDown(500)
-                                        } else {
-                                            CD.showMessage(data.message)
-                                        }
-                                    }
-                                })
-                         
-                         return false;
-                     })
+                             url: "/docstring_comments/new",
+                             data: {
+                                 user_id: userId,
+                                 function_id: functionId,
+                                 body: root.find(".textarea").val()
+                             },
+                             dataType: 'json',
+                             success: function(data) {
+                                 if(data.success) {
+                                     var content = $(data.content)
+                                     content.css('display', 'none')
+                                     $('.docstring_comments_list').append(content)
+                                     initControls(content)
+                                     root.find(".textarea").val("")
+                                     root.find(".preview").html("")
+                                     content.slideDown(500)
+                                 } else {
+                                     CD.showMessage(data.message)
+                                 }
+                             }
+                         })
+            
+            return false;
+        })
     }
     
     return {
         init: function(args) {
+            
             initControls($('.docstring_comment'))
 
-            initNewComment(args.userId, args.functionId, $(".new_comment"))
+            initNewComment(args.userId, args.functionId, $(".new_docstring_comment"))
         }
     }
 }()

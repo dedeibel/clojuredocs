@@ -1146,7 +1146,7 @@ span.version {
 	margin-bottom: 50px;
 }
 
-.docstring_comment {
+.docstring_comment, .new_docstring_comment {
 	border: solid #ccc 1px;
 	margin-bottom: 15px;
 }

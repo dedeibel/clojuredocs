@@ -36,8 +36,6 @@ class DocstringCommentsController < ApplicationController
 
     @dc.delete
 
-    render json_fail "stuff" and return
-
     render :json => {:success => true, :message => "Comment successfully deleted."}
   end
 
