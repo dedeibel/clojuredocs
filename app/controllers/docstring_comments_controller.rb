@@ -1,7 +1,10 @@
 class DocstringCommentsController < ApplicationController
   layout 'main'
-  
+
   def index
+  end
+  
+  def view
     @function = Function.find_by_id(params[:id])
     @docstring_comment = DocstringComment.new
     
@@ -29,5 +32,20 @@ class DocstringCommentsController < ApplicationController
       flash[:message] = "Comment deleted."
       redirect_back_or_default "/"
     end
+  end
+
+  def new
+    ds = DocstringComment.new
+    ds.user_id = params[:user_id]
+    ds.function_id = params[:function_id]
+    ds.body = params[:body]
+
+    if not ds.valid?
+      render json_fail "There was a problem with your comment, is it blank?" and return
+    end
+
+    ds.save
+
+    render :json => {:success => true, :message => "Comment added."}
   end
 end

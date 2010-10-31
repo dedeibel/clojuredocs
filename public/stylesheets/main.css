@@ -1114,6 +1114,10 @@ span.version {
 	color: white;
 }
 
+.docstring_discussion .doc {
+    margin-bottom: 20px;
+}
+
 .docstring_comments_link_wrapper a {
 	color: #777;
 	margin-top: 10px;
@@ -1171,3 +1175,8 @@ span.version {
 .edit_comment h4 {
     font-weight: bold;
 }
+
+.keep_me_updated {
+    text-align: center;
+}
+

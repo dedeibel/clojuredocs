@@ -71,7 +71,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/see_also/vote', :controller => 'see_also', :action => 'vote'
   map.connect '/see_also/add', :controller => 'see_also', :action => 'add'
   
-  map.connect '/docstring_comments/:id', :controller => 'docstring_comments'
+  map.connect '/docstring_comments/', :controller => 'docstring_comments', :action => 'index'
+  map.connect '/docstring_comments/view/:id', :controller => 'docstring_comments', :action => 'view'
   map.connect '/docstring_comments/delete/:id', :controller => 'docstring_comments', :action => 'delete'
   
   
