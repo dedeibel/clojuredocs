@@ -3,7 +3,7 @@ class AddVersionNumsToThirdParty < ActiveRecord::Migration
   def self.set_lib_version(lib_name, version)
     lib = Library.find_by_name(lib_name)
     if not lib
-      puts "Couldn't find #{lib_name}"
+      puts "#{lib_name} not found, skipping"
       return
     end
     lib.version = version
