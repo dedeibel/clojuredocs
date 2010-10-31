@@ -652,6 +652,11 @@ CD.DocstringDiscussion = function() {
         }
         
         del.click(delClick)
+
+        var edit = root.find('.edit')
+        edit.click(function() {
+            alert('edit')
+        })
     }
 
     function initNewComment(userId, functionId, root) {
@@ -689,8 +694,10 @@ CD.DocstringDiscussion = function() {
     
     return {
         init: function(args) {
-            
-            initControls($('.docstring_comment'))
+
+            $.each($('.docstring_comment'), function(i, o) {
+                initControls(o)
+            })
 
             initNewComment(args.userId, args.functionId, $(".new_docstring_comment"))
         }

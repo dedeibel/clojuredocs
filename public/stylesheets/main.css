@@ -1137,6 +1137,10 @@ span.version {
 	margin-bottom: 10px;
 }
 
+.docstring_comments ul {
+    margin-bottom: 10px
+}
+
 .docstring_comments p {
 	font-size: 14px;
 	margin-bottom: 10px;
