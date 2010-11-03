@@ -21,29 +21,45 @@ class DocstringCommentsController < ApplicationController
   end
 
   def delete
-    @dc = DocstringComment.find_by_id(params[:id])
-    if not @dc
-      render json_fail "Couldn't find the comment you wanted to delete." and return
-    end
 
     if not current_user_session
       render json_fail "You must be logged in to delete a docstring comment." and return
     end
 
-    if @dc.user != current_user
+    dc = DocstringComment.find_by_id(params[:id])
+    if not dc
+      render json_fail "Couldn't find the comment you wanted to delete." and return
+    end
+
+    if dc.user != current_user
       render json_fail "You don't own the comment you'd like to delete." and return
     end
 
-    @dc.delete
+    dc.delete
 
     render :json => {:success => true, :message => "Comment successfully deleted."}
   end
 
   def new
+
+    f = Function.find_by_id(params[:function_id])
+
+    if not f
+      render json_fail "Couldn't find the var you'd like to comment on." and return
+    end
+
+    if not current_user_session
+      render json_fail "You must be logged in to post a comment." and return
+    end
+
     dc = DocstringComment.new
-    dc.user_id = params[:user_id]
-    dc.function_id = params[:function_id]
+    dc.user_id = current_user.id
+    dc.function_id = f.id
     dc.body = params[:body]
+
+    if not dc.body
+      render json_fail "There was a problem with your comment, is it blank?" and return
+    end    
 
     if not dc.valid?
       render json_fail "There was a problem with your comment, is it blank?" and return
