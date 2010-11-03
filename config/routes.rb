@@ -75,6 +75,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/docstring_comments/view/:id', :controller => 'docstring_comments', :action => 'view'
   map.connect '/docstring_comments/delete/:id', :controller => 'docstring_comments', :action => 'delete'
   map.connect '/docstring_comments/new/:id', :controller => 'docstring_comments', :action => 'new'
+  map.connect '/docstring_comments/update/:id', :controller => 'docstring_comments', :action => 'update'
   
   
   map.connect '/v/:id', :controller => 'main', :action => 'function_short_link'

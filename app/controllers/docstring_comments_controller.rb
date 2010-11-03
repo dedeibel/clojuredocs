@@ -69,4 +69,33 @@ class DocstringCommentsController < ApplicationController
 
     render :json => {:success => true, :message => "Comment added.", :content => render_to_string(:partial => "docstring_comment_item", :locals => {:dc => dc})}
   end
+
+  def update
+    if not current_user_session
+      render json_fail "You must be logged in to update a comment." and return
+    end
+
+    new_body = params[:body]
+    if new_body.blank?
+      render json_fail "Updated comment can't be blank." and return
+    end
+
+    dc = DocstringComment.find_by_id(params[:id])
+    if not dc
+      render json_fail "Can't find the comment you'd like to update." and return
+    end
+
+    if not dc.user_id == current_user.id
+      render json_fail "You don't own the comment you'd like to update." and return
+    end
+
+    dc.body = new_body
+    dc.save
+
+    render :json => {
+      :success => true,
+      :message => "Comment updated.",
+      :content => render_to_string(:partial => "docstring_comment_item", :locals => {:dc => dc})
+    }
+  end
 end

@@ -81,4 +81,55 @@ class DocstringCommentsControllerTest < ActionController::TestCase
       should_json_succeed
     end
   end
+
+  context "Updating a comment" do
+    context "without a valid user session" do
+      setup do
+        get :update
+      end
+
+      should_json_fail
+    end
+
+    context "without a valid body" do
+      setup do
+        @u = Factory.create(:user)
+        UserSession.create(@u)
+        get :update, :body => ''
+      end
+
+      should_json_fail
+    end
+
+    context "without a valid docstring" do
+      setup do
+        @u = Factory.create(:user)
+        UserSession.create(@u)
+        get :update, :body => 'test'
+      end
+
+      should_json_fail
+    end
+
+    context "without a non-owner logged in" do
+      setup do
+        @u = Factory.create(:user)
+        UserSession.create(@u)
+        @dc = Factory.create(:docstring_comment)
+        get :update, :body => 'test', :id => @dc.id
+      end
+
+      should_json_fail
+    end
+
+    context "with valid info" do
+      setup do
+        @dc = Factory.create(:docstring_comment)
+        UserSession.create(@dc.user)
+        get :update, :body => 'test', :id => @dc.id
+      end
+
+      should_json_succeed
+    end
+  end
 end

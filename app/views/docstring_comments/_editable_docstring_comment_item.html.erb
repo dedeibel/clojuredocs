@@ -1,0 +1,31 @@
+<div class="new_docstring_comment">
+  <div class="docstring_comment_header">
+    <div class="author">
+      <img src="<%= grav_url_for(user.email, 25) %>" />
+      <span class="author_nickname">
+        <%= link_to user.login, :controller => 'user', :action => 'profile', :login => user.login %>
+      </span>
+      <%= image_tag 'ajax-loader.gif', :class => 'spinner hidden' %>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <div class="docstring_comment_body">
+    <% form_for :docstring_comment, @docstring_comment do |f| %>
+      Comment <span class="instructions">(markdown allowed, code in &lt;pre /&gt;)</span><br />
+      <%= f.text_area :body, :class=> 'textarea' %>
+      <a href="#" class="cancel hidden">cancel</a>
+      <div style="text-align: right">
+        <%= f.submit 'Add Comment', :class => 'comment_submit' %>
+        <div class="clear"></div>
+      </div>
+      <input type="hidden" name="update_comment" value="true" />
+      <input type="hidden" name="comment_id" value="-1" />
+      <fieldset class="live_preview">
+        <legend>Live Preview</legend>
+        <div class="preview"></div>
+      </fieldset>
+    <% end %>
+  </div>
+  
+</div>

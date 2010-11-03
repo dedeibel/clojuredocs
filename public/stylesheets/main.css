@@ -1184,3 +1184,6 @@ span.version {
     text-align: center;
 }
 
+.spinner {
+    padding-bottom: 2px
+}

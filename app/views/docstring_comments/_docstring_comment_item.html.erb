@@ -25,7 +25,7 @@
   <div class="docstring_comment_footer">
     Posted <%= time_ago_or_time_stamp(dc.created_at)%>.
     <% if dc.created_at != dc.updated_at %>
-      Last edited <%= dc.updated_at %>
+      Last edited <%= time_ago_or_time_stamp dc.updated_at %>
       <% end%>
   </div>
 </li>

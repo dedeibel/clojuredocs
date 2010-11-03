@@ -89,14 +89,14 @@ Factory.sequence :openid do |n|
 end
 
 Factory.define :user do |u|
-  u.login Factory.next(:login)
-  u.email Factory.next(:email)
-  u.crypted_password Factory.next(:sha1)
-  u.password_salt Factory.next(:sha1)
-  u.persistence_token Factory.next(:sha1)
+  u.login { Factory.next(:login) }
+  u.email { Factory.next(:email) }
+  u.crypted_password { Factory.next(:sha1) }
+  u.password_salt { Factory.next(:sha1) }
+  u.persistence_token { Factory.next(:sha1) }
   u.login_count 0
   u.failed_login_count 0
-  u.openid_identifier Factory.next(:openid)
+  u.openid_identifier { Factory.next(:openid) }
   u.password "testing"
   u.password_confirmation "testing"
 end
@@ -114,13 +114,13 @@ Factory.sequence :library_name do |n|
 end
 
 Factory.define :library do |l|
-  l.name Factory.next(:library_name)
+  l.name { Factory.next(:library_name) }
   l.description "Hello World"
   l.site_url "http://clojure.org"
 end
   
 Factory.define :namespace do |n|
-  n.name Factory.next(:namespace_name)
+  n.name { Factory.next(:namespace_name) }
   n.doc "Test namespace docstring"
   n.source_url "/src/main/clojure/core.clj"
   n.version "1.2.0"
@@ -129,7 +129,6 @@ end
 
 Factory.define :function do |f|
   f_name = Factory.next(:function_name)
-  f.name f_name
   f.file "clojure/core.clj"
   f.line 1
   f.arglists_comp "[x y z]"
@@ -145,7 +144,7 @@ end
 Factory.define :docstring_comment do |d|
   d.association :user
   d.association :function
-  d.body Factory.next(:sha1)
+  d.body { Factory.next(:sha1) }
 end
 
 

@@ -13,8 +13,8 @@ CD.toCDMarkdown = function(text) {
 CD.showMessage = function(text) {
     var el = $("<div class='warning'>" + text + "</div>")
     setTimeout(function() {
-                   el.slideUp()
-               }, 5000)
+        el.slideUp()
+    }, 5000)
     el.css("display", "none")
     el.css("position", "fixed")
     el.css("width", "100%")
@@ -46,8 +46,8 @@ jQuery.fn.makeTOCSideBar = function() {
     }
 
     $(window).scroll(function (event) {
-                         updateTocPosition(el, startTop);
-                     });
+        updateTocPosition(el, startTop);
+    });
 
     updateTocPosition(el, startTop);
 }
@@ -131,8 +131,8 @@ CD.Examples = function() {
         }
 
         textarea.keyup(function() {
-                           updatePreview()
-                       })
+            updatePreview()
+        })
 
         updatePreview()
     }
@@ -182,124 +182,124 @@ CD.Examples = function() {
                         var loader = example.find(".ajax_loader")
 
                         example.find("form").ajaxForm({
-                                                          url: CD.ROOT_URL + "/examples/update",
-                                                          beforeSubmit: function(formData) {
-                                                              loader.css("display", "block")
-                                                          },
-                                                          success: function(data) {
-                                                              var el = null
-                                                              if(data.success) {
-                                                                  example.slideUp(function() {
-                                                                                      el = $(data.content)
-                                                                                      el.css("display", "none")
-                                                                                      example.parent().html(el)
-                                                                                      SyntaxHighlighter.highlight(el.find(".content"))
-                                                                                      initExampleControls(el, editExampleFormHTML)
-                                                                                      el.slideDown(function() {
-                                                                                                       $.scrollTo(example, 300, {offset: {top: -30}})
-                                                                                                   })
-                                                                                  })
-                                                              } else {
-                                                                  CD.showMessage(data.message)
-                                                              }
+                            url: CD.ROOT_URL + "/examples/update",
+                            beforeSubmit: function(formData) {
+                                loader.css("display", "block")
+                            },
+                            success: function(data) {
+                                var el = null
+                                if(data.success) {
+                                    example.slideUp(function() {
+                                        el = $(data.content)
+                                        el.css("display", "none")
+                                        example.parent().html(el)
+                                        SyntaxHighlighter.highlight(el.find(".content"))
+                                        initExampleControls(el, editExampleFormHTML)
+                                        el.slideDown(function() {
+                                            $.scrollTo(example, 300, {offset: {top: -30}})
+                                        })
+                                    })
+                                } else {
+                                    CD.showMessage(data.message)
+                                }
 
-                                                              loader.css("display", "none")
-                                                          },
-                                                          error: function(data) {
-                                                              loader.css("display", "none")
-                                                              CD.showMessage("There seems to be a problem on the server, please try again later. (500)")
-                                                          }
-                                                      })
+                                loader.css("display", "none")
+                            },
+                            error: function(data) {
+                                loader.css("display", "none")
+                                CD.showMessage("There seems to be a problem on the server, please try again later. (500)")
+                            }
+                        })
 
                         example.slideDown(function() {
-                                              $.scrollTo(example, 300, {offset: {top: -30}})
-                                          })
+                            $.scrollTo(example, 300, {offset: {top: -30}})
+                        })
                     })
                 return false;
             })
 
         root.find(".delete").click(function() {
-                                       var img = $(this).find("img")
-                                       img.attr("src", "/images/ajax-loader.gif")
-                                       img.css("margin-bottom", "-5px")
+            var img = $(this).find("img")
+            img.attr("src", "/images/ajax-loader.gif")
+            img.css("margin-bottom", "-5px")
 
-                                       if(confirm("Are you sure you want to delete this example?  There is no undo!")) {
-                                           var example_div = $(this).parents(".example")
-                                           var id = example_div.attr("id").split("_")[1]
+            if(confirm("Are you sure you want to delete this example?  There is no undo!")) {
+                var example_div = $(this).parents(".example")
+                var id = example_div.attr("id").split("_")[1]
 
-                                           $.ajax({
-                                                      url: CD.ROOT_URL + "/examples/delete",
-                                                      data: {id: id},
-                                                      dataType: 'json',
-                                                      success: function(data) {
-                                                          if(data.success) {
-                                                              example_div.slideUp(function() {
-                                                                                      example_div.parent().remove()
-                                                                                      updateExamplesCount()
-                                                                                  })
+                $.ajax({
+                    url: CD.ROOT_URL + "/examples/delete",
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success) {
+                            example_div.slideUp(function() {
+                                example_div.parent().remove()
+                                updateExamplesCount()
+                            })
 
-                                                          } else {
-                                                              CD.showMessage(data.message)
-                                                              img.attr("src", "/images/trash_stroke_12x12.png")
-                                                              img.css("margin-bottom", "0px")
-                                                          }
-                                                      },
-                                                      error: function(data) {
-                                                          CD.showMessage("There seems to be a problem on the server, please try again later. (500)")
-                                                          img.attr("src", "/images/trash_stroke_12x12.png")
-                                                          img.css("margin-bottom", "0px")
-                                                      }
-                                                  })
-                                       }
+                        } else {
+                            CD.showMessage(data.message)
+                            img.attr("src", "/images/trash_stroke_12x12.png")
+                            img.css("margin-bottom", "0px")
+                        }
+                    },
+                    error: function(data) {
+                        CD.showMessage("There seems to be a problem on the server, please try again later. (500)")
+                        img.attr("src", "/images/trash_stroke_12x12.png")
+                        img.css("margin-bottom", "0px")
+                    }
+                })
+            }
 
-                                       return false;
-                                   })
+            return false;
+        })
     }
 
     function initNewExample(editExampleFormHTML) {
         $('#add_new_example').click(function() {
-                                        var newExample = $("#new_example")
-                                        newExample.slideDown(500, function() {
-                                                                 newExample.find("textarea").focus()
-                                                                 $.scrollTo(newExample, 300, {offset: {top: -30}})
-                                                             })
-                                        return false;
-                                    })
+            var newExample = $("#new_example")
+            newExample.slideDown(500, function() {
+                newExample.find("textarea").focus()
+                $.scrollTo(newExample, 300, {offset: {top: -30}})
+            })
+            return false;
+        })
 
         $('#new_example').find(".cancel").click(function(e) {
-                                                    $('#new_example').find("textarea").val("")
-                                                    $('#new_example').slideUp(500)
-                                                    return false;
-                                                })
+            $('#new_example').find("textarea").val("")
+            $('#new_example').slideUp(500)
+            return false;
+        })
 
         var loader = $("#new_example .ajax_loader")
 
         $("#new_example form").ajaxForm({
-                                            url: CD.ROOT_URL + "/examples/new",
-                                            beforeSubmit: function() {
-                                                loader.css("display", "block")
-                                            },
-                                            success: function(data) {
-                                                loader.css("display", "block")
-                                                var el = null
-                                                if(data.success) {
-                                                    el = $("<li>" + data.content + "</li>")
-                                                    el.css("display", "none")
-                                                    $("#var_examples").append(el)
-                                                    SyntaxHighlighter.highlight(el.find(".content"))
-                                                    initExampleControls(el, editExampleFormHTML)
-                                                    el.slideDown()
-                                                    $("#new_example").slideUp()
-                                                    $("#new_example textarea").val("")
-                                                    $("#new_example .preview").html("")
-                                                    updateExamplesCount()
-                                                } else {
-                                                    CD.showMessage(data.message)
-                                                }
+            url: CD.ROOT_URL + "/examples/new",
+            beforeSubmit: function() {
+                loader.css("display", "block")
+            },
+            success: function(data) {
+                loader.css("display", "block")
+                var el = null
+                if(data.success) {
+                    el = $("<li>" + data.content + "</li>")
+                    el.css("display", "none")
+                    $("#var_examples").append(el)
+                    SyntaxHighlighter.highlight(el.find(".content"))
+                    initExampleControls(el, editExampleFormHTML)
+                    el.slideDown()
+                    $("#new_example").slideUp()
+                    $("#new_example textarea").val("")
+                    $("#new_example .preview").html("")
+                    updateExamplesCount()
+                } else {
+                    CD.showMessage(data.message)
+                }
 
-                                                loader.css("display", "none")
-                                            }
-                                        })
+                loader.css("display", "none")
+            }
+        })
 
         previewify($("#new_example"))
     }
@@ -322,8 +322,8 @@ CD.SeeAlsos = function() {
             var id = $(this).attr("id").split("_")[1]
             params = {id: id}
             $.getJSON("/see_also/delete", params, function(data) {
-                          $("#see_also_item_" + id).slideUp(500)
-                      })
+                $("#see_also_item_" + id).slideUp(500)
+            })
             $("#see_also_item_" + id + " .controls .delete img").attr("src", "/images/ajax-loader.gif")
         }
 
@@ -356,37 +356,37 @@ CD.SeeAlsos = function() {
 
         $.getJSON("/see_also/add", params, function(data) {
 
-                      if(data.success) {
-                          addItem(data)
-                      } else {
-                          CD.showMessage(data.message)
-                      }
-                  })
+            if(data.success) {
+                addItem(data)
+            } else {
+                CD.showMessage(data.message)
+            }
+        })
     }
 
     function initVoteAction(root, action) {
 
         root.find(".controls ." + action).click(function() {
-                                                    var split = $(this).attr("id").split("_")
-                                                    var id = split[split.length-1]
-                                                    var see_also_item = $("#see_also_item_" + id)
-                                                    $.getJSON("/see_also/vote", {id: id, vote_action: action}, function(data) {
-                                                                  if(data.success) {
-                                                                      var vote_count = see_also_item.find(".vote_count")
+            var split = $(this).attr("id").split("_")
+            var id = split[split.length-1]
+            var see_also_item = $("#see_also_item_" + id)
+            $.getJSON("/see_also/vote", {id: id, vote_action: action}, function(data) {
+                if(data.success) {
+                    var vote_count = see_also_item.find(".vote_count")
 
-                                                                      if(action == "vote_up") {
-                                                                          vote_count.html(parseInt(vote_count.html()) + 1)
-                                                                      } else {
-                                                                          vote_count.html(parseInt(vote_count.html()) - 1)
-                                                                      }
+                    if(action == "vote_up") {
+                        vote_count.html(parseInt(vote_count.html()) + 1)
+                    } else {
+                        vote_count.html(parseInt(vote_count.html()) - 1)
+                    }
 
-                                                                      see_also_item.find(".vote_up").css("display", "none")
-                                                                      see_also_item.find(".vote_down").css("display", "none")
-                                                                  }
-                                                              })
+                    see_also_item.find(".vote_up").css("display", "none")
+                    see_also_item.find(".vote_down").css("display", "none")
+                }
+            })
 
-                                                    return false;
-                                                })
+            return false;
+        })
     }
 
     function initItem(el) {
@@ -394,44 +394,44 @@ CD.SeeAlsos = function() {
         el.find(".controls .delete").click(deleteItem)
 
         $(el).find(".controls .vote_up").qtip({
-                                                  content: 'Vote Up',
-                                                  show: {
-                                                      delay: 0
-                                                  },
-                                                  style: {
-                                                      name: 'light',
-                                                      tip: 'bottomMiddle'
-                                                  },
-                                                  position: {
-                                                      corner: {
-                                                          target: 'topMiddle',
-                                                          tooltip: 'bottomMiddle'
-                                                      },
-                                                      adjust: {
-                                                          y: -13
-                                                      }
-                                                  }
-                                              })
+            content: 'Vote Up',
+            show: {
+                delay: 0
+            },
+            style: {
+                name: 'light',
+                tip: 'bottomMiddle'
+            },
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                },
+                adjust: {
+                    y: -13
+                }
+            }
+        })
 
         $(el).find(".controls .vote_down").qtip({
-                                                    content: 'Vote Down',
-                                                    show: {
-                                                        delay: 0
-                                                    },
-                                                    style: {
-                                                        name: 'light',
-                                                        tip: 'bottomMiddle'
-                                                    },
-                                                    position: {
-                                                        corner: {
-                                                            target: 'topMiddle',
-                                                            tooltip: 'bottomMiddle'
-                                                        },
-                                                        adjust: {
-                                                            y: -13
-                                                        }
-                                                    }
-                                                })
+            content: 'Vote Down',
+            show: {
+                delay: 0
+            },
+            style: {
+                name: 'light',
+                tip: 'bottomMiddle'
+            },
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                },
+                adjust: {
+                    y: -13
+                }
+            }
+        })
 
         initVoteAction(el, "vote_up")
         initVoteAction(el, "vote_down")
@@ -439,36 +439,36 @@ CD.SeeAlsos = function() {
 
     function initAutoComplete(varId, library, version) {
         $("#var_name_search").autocomplete({
-                                               source: function(req, add) {
-                                                   params = {
-                                                       term: req.term,
-                                                       library: library,
-                                                       version: version
-                                                   }
-                                                   $.getJSON("/see_also/lookup", params, function(data) {
-                                                                 var out = []
-                                                                 $.each(data, function(i, v) {
-                                                                            var lbl = "<div class=\"see_also_result\">"
-                                                                            lbl += "<span class='ns'>" + v.ns + "/</span>"
-                                                                            lbl += "<span class='name'>" + v.name + "</span>"
-                                                                            lbl += "</div>"
-                                                                            out.push({label: lbl, value: v.ns + "/" + v.name, href: v.href})
-                                                                        })
+            source: function(req, add) {
+                params = {
+                    term: req.term,
+                    library: library,
+                    version: version
+                }
+                $.getJSON("/see_also/lookup", params, function(data) {
+                    var out = []
+                    $.each(data, function(i, v) {
+                        var lbl = "<div class=\"see_also_result\">"
+                        lbl += "<span class='ns'>" + v.ns + "/</span>"
+                        lbl += "<span class='name'>" + v.name + "</span>"
+                        lbl += "</div>"
+                        out.push({label: lbl, value: v.ns + "/" + v.name, href: v.href})
+                    })
 
-                                                                 add(out)
-                                                             })
-                                               },
-                                               focus: function(event, ui) {
-                                                   return false
-                                               },
-                                               select: function(event, ui) {
-                                                   $("#var_name_search").val(ui.item.value)
-                                                   requestAddItem(varId, ui.item.value)
-                                                   $("#var_name_search").val("")
-                                                   return false
-                                               },
-                                               dataType: "json"
-                                           })
+                        add(out)
+                })
+            },
+            focus: function(event, ui) {
+                return false
+            },
+            select: function(event, ui) {
+                $("#var_name_search").val(ui.item.value)
+                requestAddItem(varId, ui.item.value)
+                $("#var_name_search").val("")
+                return false
+            },
+            dataType: "json"
+        })
     }
 
     return {
@@ -505,8 +505,8 @@ CD.VarPage = function() {
         }
 
         textarea.keyup(function() {
-                           updatePreview()
-                       })
+            updatePreview()
+        })
 
         updatePreview()
     }
@@ -522,78 +522,78 @@ CD.VarPage = function() {
 
 
             CD.Examples.init({
-                                 editExampleFormHTML: editExampleFormHTML
-                             })
+                editExampleFormHTML: editExampleFormHTML
+            })
 
             CD.SeeAlsos.init({
-                                 varId: varId,
-                                 library: library,
-                                 version: version
-                             })
+                varId: varId,
+                library: library,
+                version: version
+            })
 
 
             $('.expand_used_in').click(function() {
-                                           $('.used_in_expander').toggle(500)
-                                           return false
-                                       })
+                $('.used_in_expander').toggle(500)
+                return false
+            })
 
             $('#add_comment').click(function() {
-                                        $('#new_comment').slideDown(500)
-                                        return false;
-                                    })
+                $('#new_comment').slideDown(500)
+                return false;
+            })
 
             $('#new_comment').find(".cancel").click(function(e) {
-                                                        $('#new_comment').find("textarea").val("")
-                                                        $('#new_comment').slideUp(500)
-                                                        return false;
-                                                    })
+                $('#new_comment').find("textarea").val("")
+                $('#new_comment').slideUp(500)
+                return false;
+            })
 
             previewify($("#new_comment"))
             
             $(".comment .edit").click(function(e) {
-                                          var commentId = $(this).attr("id").split("_")[1]
-                                          var comment = $("#comment_" + commentId)
-                                          
-                                          var oldContent = comment.find(".content").html()
-                                          var plainContent = comment.find(".plain_content").html()
-                                          var newContent = $(editCommentFormHTML)
-                                          comment.find(".content").html(newContent)
-                                          
-                                          comment.find(".cancel").click(function(e) {
-                                                                            comment.find(".content").html(oldContent)
-                                                                            comment.find(".edit").css('display', 'inline')
-                                                                            return false;
-                                                                        })
-                                          
-                                          
-                                          comment.find("textarea").val(plainContent)
-                                          
-                                          comment.find("input[name=comment_id]").val(commentId)
-                                          previewify(comment)
+                var commentId = $(this).attr("id").split("_")[1]
+                var comment = $("#comment_" + commentId)
+                
+                var oldContent = comment.find(".content").html()
+                var plainContent = comment.find(".plain_content").html()
+                var newContent = $(editCommentFormHTML)
+                comment.find(".content").html(newContent)
+                
+                comment.find(".cancel").click(function(e) {
+                    comment.find(".content").html(oldContent)
+                    comment.find(".edit").css('display', 'inline')
+                    return false;
+                })
+                
+                
+                comment.find("textarea").val(plainContent)
+                
+                comment.find("input[name=comment_id]").val(commentId)
+                previewify(comment)
 
-                                          comment.find(".edit").css('display', 'none')
+                comment.find(".edit").css('display', 'none')
 
-                                          return false;
-                                      })
+                return false;
+            })
 
             $(".comment .delete").click(function() {
-                                            if(confirm("Are you sure you want to delete this comment?  There is no undo!")) {
-                                                return true
-                                            }
-                                            return false;
-                                        })
+                if(confirm("Are you sure you want to delete this comment?  There is no undo!")) {
+                    return true
+                }
+                return false;
+            })
 
             $("#expand_source").mouseover(function() {
 
-                                          })
+            })
 
             $("#expand_source, #collapse_source").click(function() {
-                                                            $(".source_content").slideToggle()
+                $(".source_content").slideToggle()
 
-                                                            $("#expand_source").toggle()
-                                                            $("#collapse_source").toggle()
-                                                            return false;
-                                                        })
+                $("#expand_source").toggle()
+                $("#collapse_source").toggle()
+                return false;
+            })
 
             SyntaxHighlighter.all()
         }
@@ -614,13 +614,13 @@ CD.DocstringDiscussion = function() {
         }
         
         textarea.keyup(function() {
-                           updatePreview()
-                       })
+            updatePreview()
+        })
         
         updatePreview()
     }
 
-    function initControls(commentItem) {
+    function initControls(commentItem, editContent) {
         
         var root = $(commentItem)
         var dsId = root.attr('id').split("_")[2]
@@ -657,39 +657,114 @@ CD.DocstringDiscussion = function() {
         del.click(delClick)
 
         var edit = root.find('.edit')
+
         edit.click(function() {
-            alert('edit')
+            var oldContent = root
+            var newContent = $(editContent)
+
+            newContent.find('.textarea').val($.trim(oldContent.find('.docstring_comment_body').text()))
+
+            previewify(newContent)
+
+            var submit = newContent.find('.comment_submit')
+            submit.val("Update Content")
+            submit.click(function() {
+                newContent.find('.spinner').show()
+                submit.attr({disabled: true})
+
+                $.ajax({
+                    url: '/docstring_comments/update',
+                    data: {
+                        id: dsId,
+                        body: newContent.find('textarea').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success) {
+                            newContent.find('.spinner').hide()
+                            newContent.slideUp(300, function() {
+                                var content = $(data.content)
+                                initControls(content, editContent)
+                                content.hide()
+                                newContent.slideUp(300, function() {
+                                    newContent.replaceWith(content)
+                                    content.slideDown(300)
+                                })
+                            })
+                        } else {
+                            CD.showMessage(data.message)
+                            newContent.find('.spinner').hide()
+                            submit.removeAttr('disabled')
+                        }
+                    },
+                    error: function() {
+                        newContent.find('.spinner').hide()
+                        submit.removeAttr('disabled')
+                        CD.showMessage("There was an error contacting the server, please try again later.")
+                    }
+                })
+                
+                return false;
+            })
+            
+            oldContent.slideUp(300, function() {
+
+                newContent.hide()
+                root.replaceWith(newContent)
+
+                var cancel = newContent.find('.cancel')
+                cancel.click(function() {
+                    newContent.slideUp(300, function() {
+                        oldContent.hide()
+                        newContent.replaceWith(oldContent)
+                        initControls(oldContent, editContent)
+
+                        oldContent.slideDown(300)
+                        
+                    })
+
+                    return false;
+                })
+                
+                cancel.show()
+
+                newContent.slideDown(300)
+
+            })
+            
+
+            return false
         })
     }
 
-    function initNewComment(userId, functionId, root) {
+    function initNewComment(userId, functionId, root, editContent) {
         previewify(root)
 
         var submit = root.find(".comment_submit")
 
         submit.click(function() {
-                         $.ajax({
-                             url: "/docstring_comments/new",
-                             data: {
-                                 user_id: userId,
-                                 function_id: functionId,
-                                 body: root.find(".textarea").val()
-                             },
-                             dataType: 'json',
-                             success: function(data) {
-                                 if(data.success) {
-                                     var content = $(data.content)
-                                     content.css('display', 'none')
-                                     $('.docstring_comments_list').append(content)
-                                     initControls(content)
-                                     root.find(".textarea").val("")
-                                     root.find(".preview").html("")
-                                     content.slideDown(500)
-                                 } else {
-                                     CD.showMessage(data.message)
-                                 }
-                             }
-                         })
+            $.ajax({
+                url: "/docstring_comments/new",
+                data: {
+                    user_id: userId,
+                    function_id: functionId,
+                    body: root.find(".textarea").val()
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if(data.success) {
+                        var content = $(data.content)
+                        content.css('display', 'none')
+                        $('.docstring_comments_list').append(content)
+                        initControls(content, editContent)
+                        root.find(".textarea").val("")
+                        root.find(".preview").html("")
+                        content.slideDown(500)
+                    } else {
+                        CD.showMessage(data.message)
+                    }
+                }
+            })
             
             return false;
         })
@@ -699,10 +774,10 @@ CD.DocstringDiscussion = function() {
         init: function(args) {
 
             $.each($('.docstring_comment'), function(i, o) {
-                initControls(o)
+                initControls(o, args.editContent)
             })
 
-            initNewComment(args.userId, args.functionId, $(".new_docstring_comment"))
+                initNewComment(args.userId, args.functionId, $(".new_docstring_comment"), args.editContent)
         }
     }
 }()
