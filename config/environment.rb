@@ -14,7 +14,6 @@ Rails::Initializer.run do |config|
   
   ROOT_URL = ""
 
-  #config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
     :address => 'smtp.gmail.com',
@@ -27,5 +26,3 @@ Rails::Initializer.run do |config|
   config.action_mailer.delivery_method = :activerecord
 
 end
-#ActionMailer::Base.smtp_settings = { :enable_starttls_auto => true }
-#ActionMailer::Base.delivery_method = :activerecord
