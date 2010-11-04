@@ -47,6 +47,12 @@
             <%= render :partial => 'docstring_comment_item', :locals => {:dc => dc} %>
 	  <% end %>
         </ul>
+        <% if current_user_session %>
+        <div class="notify_me">
+          <input type="checkbox" name="send_updates"/> Send me an email when somebody adds or updates a comment.
+        </div>
+        <% end %>
+
         <div class="edit_comment">
           <h3>What&apos;s your suggestion?</h3>
           <ul>

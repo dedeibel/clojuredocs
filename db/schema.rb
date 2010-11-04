@@ -9,15 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104004523) do
-
-  create_table "ar_emails", :force => true do |t|
-    t.string   "from"
-    t.string   "to"
-    t.integer  "last_send_attempt", :default => 0
-    t.text     "mail"
-    t.datetime "created_on"
-  end
+ActiveRecord::Schema.define(:version => 20101104054412) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",                 :default => 0
@@ -216,6 +208,14 @@ ActiveRecord::Schema.define(:version => 20101104004523) do
   end
 
   add_index "namespaces", ["library_id"], :name => "library_id_idx"
+
+  create_table "notify_by_email", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "target_id"
+    t.string   "target_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "open_id_authentication_associations", :force => true do |t|
     t.integer "issued"

@@ -21,7 +21,7 @@ Rails::Initializer.run do |config|
     :authentication => :plain,
     :domain => 'clojuredocs.org',
     :user_name => 'contact@clojuredocs.org',
-    :password => File.read('/etc/clojuredocs/mailer_password')
+    :password => (File.read('/etc/clojuredocs/mailer_password') rescue "")
   }
   config.action_mailer.delivery_method = :activerecord
 
