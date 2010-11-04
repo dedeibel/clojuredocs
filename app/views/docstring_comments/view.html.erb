@@ -6,7 +6,13 @@
   userId: <%= current_user.id rescue nil %>,
   functionId: <%= @function.id %>,
   editContent: '<%= (current_user_session ? (render (:partial => 'editable_docstring_comment_item', :locals => {:user => current_user})).gsub("\n", "") : "") %>'
-    })
+  })
+
+  CD.NotifyMe.init({
+  type: 'DocstringComment',
+  state: <%= @notify_me != nil %>,
+  functionId: <%= @function.id %>
+  })
   })
   
 </script>
@@ -34,23 +40,23 @@
         </div>
       <% end %>
       <div class="docstring_comments">
-        <!-- <div class="keep_me_updated"> -->
-        <!--   <input name="keep_me_updated" type="checkbox"> -->
-        <!--   <label for="keep_me_updated"> -->
-        <!--     Notify me of updates to this conversation. -->
-        <!--   </label> -->
-        <!--   <div style="font-size: 11px">We'll send you a short email when somebody adds or edits a comment on this var's docstring.</div> -->
-        <!-- </div> -->
 
         <ul class="docstring_comments_list">
           <% @function.docstring_comments.each do |dc| %>
             <%= render :partial => 'docstring_comment_item', :locals => {:dc => dc} %>
 	  <% end %>
         </ul>
+
         <% if current_user_session %>
-        <div class="notify_me">
-          <input type="checkbox" name="send_updates"/> Send me an email when somebody adds or updates a comment.
-        </div>
+          <div class="notify_me">
+            <a name="notify_me"></a>
+            <input name="keep_me_updated" type="checkbox">
+            <label for="keep_me_updated">
+              Notify me of updates to this conversation.
+            </label>
+            <div style="font-size: 11px">We'll send a short email to <span class="highlight"><%= current_user.email %></span> when someone comments on this docstring.</div>
+            
+          </div>
         <% end %>
 
         <div class="edit_comment">

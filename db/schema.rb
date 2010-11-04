@@ -11,6 +11,14 @@
 
 ActiveRecord::Schema.define(:version => 20101104054412) do
 
+  create_table "ar_emails", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.integer  "last_send_attempt", :default => 0
+    t.text     "mail"
+    t.datetime "created_on"
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",                 :default => 0
     t.string   "commentable_type", :limit => 15, :default => ""

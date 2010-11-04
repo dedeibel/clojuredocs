@@ -1,6 +1,6 @@
 class NotifyByEmail < ActiveRecord::Migration
   def self.up
-    create_table :notify_by_email do |t|
+    create_table :notify_by_emails do |t|
       t.integer :user_id
       t.integer :target_id
       t.string :target_type
@@ -10,6 +10,6 @@ class NotifyByEmail < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :notify_by_email
+    drop_table :notify_by_emails
   end
 end

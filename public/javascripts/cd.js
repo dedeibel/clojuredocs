@@ -646,6 +646,10 @@ CD.DocstringDiscussion = function() {
                         CD.showMessage(data.message)
                         spinner.replaceWith(del)
                     }
+                },
+                error: function() {
+                    CD.showMessage("Sorry, there was a problem deleting your comment.  Please try again later.")
+                    spinner.replaceWith(del)
                 }
             })
 
@@ -763,7 +767,11 @@ CD.DocstringDiscussion = function() {
                     } else {
                         CD.showMessage(data.message)
                     }
+                },
+                error: function() {
+                    CD.showMessage("Sorry, there was a problem adding your comment.  Please try again later.")
                 }
+
             })
             
             return false;
@@ -778,6 +786,49 @@ CD.DocstringDiscussion = function() {
             })
 
                 initNewComment(args.userId, args.functionId, $(".new_docstring_comment"), args.editContent)
+        }
+    }
+}()
+
+
+CD.NotifyMe = function() {
+
+    return {
+        init: function(args) {
+
+            var type = args.type
+            var state = args.state
+            var functionId = args.functionId
+
+            var checkbox = $('.notify_me input[type="checkbox"]')
+            checkbox.attr('checked', (state ? 'checked' : ''))
+
+            checkbox.click(function() {
+                checkbox.attr({disabled: true})
+                $.ajax({
+                    url: '/docstring_comments/notify_me',
+                    data: {
+                        enabled: checkbox.attr('checked'),
+                        function_id: functionId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.success) {
+                            checkbox.attr('checked', (data.enabled ? 'checked' : ''))
+                            checkbox.removeAttr('disabled')
+                        } else {
+                            CD.showMessage(data.message)
+                            checkbox.removeAttr('disabled')
+                        }
+                    },
+                    error: function(data) {
+                        CD.showMessage("There was a problem contacting the server, please try again later.")
+                        checkbox.removeAttr('disabled')
+                    }
+                })
+
+                return false
+            })
         }
     }
 }()

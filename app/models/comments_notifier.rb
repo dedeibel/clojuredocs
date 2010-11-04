@@ -5,6 +5,6 @@ class CommentsNotifier < ActionMailer::Base
     
     recipients user.email
     from "contact@clojuredocs.org"
-    subject "ClojureDocs - Comment added to #{comment.function.namespace.name}/#{comment.function.name}"
+    subject "ClojureDocs - Docstring comment added to #{comment.function.namespace.name}/#{comment.function.name}"
   end
 end

@@ -18,6 +18,10 @@ class DocstringCommentsController < ApplicationController
         redirect_to :action => 'index', :id => @function.id
       end
     end
+
+    if current_user_session
+      @notify_me = NotifyByEmail.find_by_user_id_and_target_id_and_target_type(current_user.id, @function.id, 'function_docstring_comment')
+    end
   end
 
   def delete
@@ -67,6 +71,12 @@ class DocstringCommentsController < ApplicationController
 
     dc.save
 
+    to_notify = NotifyByEmail.find_all_by_target_id(dc.function.id, 'function_docstring_comment')
+
+    to_notify.each do |tn|
+      CommentsNotifier.deliver_comment_added(tn.user, dc)
+    end
+
     render :json => {:success => true, :message => "Comment added.", :content => render_to_string(:partial => "docstring_comment_item", :locals => {:dc => dc})}
   end
 
@@ -97,5 +107,42 @@ class DocstringCommentsController < ApplicationController
       :message => "Comment updated.",
       :content => render_to_string(:partial => "docstring_comment_item", :locals => {:dc => dc})
     }
+  end
+
+  def notify_me
+    
+    if not current_user_session
+      render json_fail "You must be logged in up change your notification preferences." and return
+    end
+
+    if not params[:enabled]
+      render json_fail "Notify me state not provided in request." and return
+    end
+
+    f = Function.find_by_id(params[:function_id])
+
+    if not f
+      render json_fail "Docstring not found." and return
+    end
+
+    enabled = (params[:enabled] == "true" ? true : false)
+
+    existing = NotifyByEmail.find_by_user_id_and_target_id_and_target_type(current_user.id, f.id, 'function_docstring_comment')
+
+    # ugly ugly
+
+    if existing
+      if not enabled
+        existing.delete
+      end
+    elsif enabled
+      n = NotifyByEmail.new
+      n.user_id = current_user.id
+      n.target_id = f.id
+      n.target_type = 'function_docstring_comment'
+      n.save
+    end
+    
+    render :json => {:success => true, :enabled => enabled}
   end
 end
