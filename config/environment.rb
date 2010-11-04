@@ -13,4 +13,19 @@ Rails::Initializer.run do |config|
   config.action_controller.perform_caching = true
   
   ROOT_URL = ""
+
+  #config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :authentication => :plain,
+    :domain => 'clojuredocs.org',
+    :user_name => 'contact@clojuredocs.org',
+    :password => File.read('/etc/clojuredocs/mailer_password')
+  }
+  config.action_mailer.delivery_method = :activerecord
+
 end
+#ActionMailer::Base.smtp_settings = { :enable_starttls_auto => true }
+#ActionMailer::Base.delivery_method = :activerecord

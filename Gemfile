@@ -6,12 +6,12 @@ gem 'ruby-openid', '2.1.7'
 gem 'rack-openid', '1.0.3', :require => nil
 gem 'mysql', '2.8.1'
 gem 'rubytree', '0.7.0'
-
 gem 'rdiscount', '1.6.5'
 gem 'chronic', '0.2.3'
 gem 'will_paginate', '2.3.12'
 gem 'levenshtein', '0.2.0'
 gem 'capistrano', '2.5.19'
+gem 'adzap-ar_mailer', '2.1.8'
 
 group :test do
   gem 'shoulda', '2.11.3'

@@ -1,0 +1,18 @@
+Hi,
+
+We thought you'd like to know that <%= @comment.user.login %> just added a comment to <%= @comment.function.namespace.name %>/<%= @comment.function.name %>:
+
+==
+
+<%= @comment.body %>
+
+==
+
+You've been sent this email because you had previously commented on this var.
+
+To unsubscribe to comments on this specific var visit http://clojuredocs.org/docstring_comments/view/<%= @comment.id %> and uncheck 'Send me an email when somebody adds / updates a comment'.
+
+If you'd like to change your global email preferences, please log in and visit your profile page: http://clojuredocs.org/profile/<%= @user.login %>.
+
+Thanks, ClojureDocs.
+http://clojuredocs.org
