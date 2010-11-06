@@ -1,14 +1,12 @@
 Hi,
 
-We thought you'd like to know that <%= @comment.user.login %> just added a comment to <%= @comment.function.namespace.name %>/<%= @comment.function.name %>: http://clojuredocs.org/docstring_comments/view/<%= @comment.function.id %>#docstring_comment_<%= @comment.id %>
+<%= @comment.user.login %> just added a comment to <%= @comment.function.namespace.name %>/<%= @comment.function.name %>: http://clojuredocs.org/docstring_comments/view/<%= @comment.function.id %>#docstring_comment_<%= @comment.id %>
 
-==
+== Comment Text
 
 <%= @comment.body %>
 
 ==
-
-You've been sent this email because you had previously commented on this var.
 
 To unsubscribe to comments on this specific var visit http://clojuredocs.org/docstring_comments/view/<%= @comment.function.id %>#notify_me and uncheck 'Send me an email when somebody adds / updates a comment'.
 

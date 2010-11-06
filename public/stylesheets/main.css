@@ -643,7 +643,7 @@ fieldset {
 	margin-bottom: 10px;
 }
 
-.wm_quickref, .wm_alpha, .wm_search, .contribute .feedback, .contribute .add_example {
+.wm_quickref, .wm_alpha, .wm_search, .contribute .feedback, .contribute .add_example, .contribute .improve_docstrings {
 	background-repeat: no-repeat;
 	background-position: 4px 4px;
 }
@@ -662,13 +662,18 @@ fieldset {
 }
 
 .contribute .feedback {
-	background-image: url('/images/chat_alt_stroke_16x16.png');
-	background-position: 4px 7px;
+    background-image: url('/images/volume_16x12.png');
+    background-position: 4px 8px;
 }
 
 .contribute .add_example {
-	background-image: url('/images/read_more_16x16.png');
-	background-position: 5px 7px;
+    background-image: url('/images/read_more_16x16.png');
+    background-position: 5px 7px;
+}
+
+.contribute .improve_docstrings {
+    background-image: url('/images/chat_alt_stroke_16x16.png');
+    background-position: 4px 7px;
 }
 
 .contribute ul li h3 {
@@ -1191,4 +1196,18 @@ span.version {
 .notify_me {
     text-align: center;
     margin-bottom: 5px;
+}
+
+.docstring_comment_summary {
+    margin-bottom: 14px;
+    padding: 10px;
+    border-bottom: solid #ccc 1px;
+}
+
+.docstring_comment_summary .var {
+    font-size: 14px;
+}
+
+.docstring_comment_summary .body {
+    margin-left: 10px;
 }

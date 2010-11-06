@@ -2,6 +2,7 @@ class DocstringCommentsController < ApplicationController
   layout 'main'
 
   def index
+    @dcs = DocstringComment.find(:all, :order => 'updated_at DESC')
   end
   
   def view
